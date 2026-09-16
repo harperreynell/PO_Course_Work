@@ -1,0 +1,9 @@
+/target/
+/.venv/
+/.tools/
+/data/generated*/
+/data/.generating-*/
+/results/local*/
+__pycache__/
+*.pyc
+.DS_Store
