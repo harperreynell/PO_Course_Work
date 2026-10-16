@@ -1,0 +1,26 @@
+services:
+  server:
+    build: .
+    ports:
+      - "${PORT:-8080}:8080"
+    environment:
+      DATA_DIR: /data
+      OLLAMA_URL: http://ollama:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5:0.5b}
+      OLLAMA_TIMEOUT_MS: ${OLLAMA_TIMEOUT_MS:-45000}
+      JAVA_TOOL_OPTIONS: ${JAVA_TOOL_OPTIONS:--Xms64m -Xmx1024m}
+    volumes:
+      - ${DATA_DIR:-./data/sample}:/data:ro
+    depends_on:
+      - ollama
+  ollama:
+    image: ollama/ollama:0.13.5
+    entrypoint: ["/bin/sh", "/bootstrap/start-ollama.sh"]
+    environment:
+      OLLAMA_HOST: 0.0.0.0:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5:0.5b}
+    volumes:
+      - models:/root/.ollama
+      - ./scripts/start-ollama.sh:/bootstrap/start-ollama.sh:ro
+volumes:
+  models:
