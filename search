@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+"""CLI for the keyword REST endpoint (Python standard library)."""
+import argparse
+import json
+import os
+import sys
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Пошук в англомовному індексі")
+    parser.add_argument("query", help="запит у лапках")
+    parser.add_argument("--url", default=os.getenv("SEARCH_URL", "http://localhost:8080"))
+    parser.add_argument("--json", action="store_true", help="повна відповідь сервера")
+    args = parser.parse_args()
+    raw = json.dumps(dict(query=args.query, mode="keyword")).encode()
+    request = Request(args.url.rstrip("/") + "/api/search", data=raw,
+                      headers={"Content-Type": "application/json"})
+    try:
+        with urlopen(request, timeout=20) as response:
+            result = json.load(response)
+        if args.json:
+            print(json.dumps(result, ensure_ascii=False))
+        else:
+            for hit in result["results"]:
+                print(f'{hit["doc_id"]}  {hit["score"]:.3f}\n  {hit["snippet"]}')
+            print(f'Збігів: {len(result["results"])} · {result["time_ms"]} мс')
+    except HTTPError as error:
+        print(f"HTTP {error.code}: {error.read().decode(errors='replace')}", file=sys.stderr)
+        return 1
+    except (OSError, URLError, ValueError, KeyError) as error:
+        print(f"Помилка пошуку: {error}", file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

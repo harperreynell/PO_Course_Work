@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Пошук у корпусі</title><link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header><strong>Пошукова лабораторія</strong><span id="health" role="status">Перевіряємо Ollama…</span></header>
+  <main>
+    <section class="search">
+      <h1>Пошук у корпусі</h1>
+      <form id="query-form">
+        <label for="query">Англійський запит</label>
+        <div class="controls"><input id="query" name="query" placeholder="Наприклад, satellite orbit" maxlength="512" required>
+          <button id="submit">Знайти</button></div>
+      </form>
+      <ol id="stages" aria-label="Етапи пошуку" aria-live="polite">
+        <li id="expansion">Розширення запиту</li><li id="keyword">Пошук в індексі</li><li id="done">Завершення</li>
+      </ol>
+      <p id="terms" aria-live="polite"></p>
+      <h2 id="result-heading">Результати</h2>
+      <p id="notice" role="status">Введіть запит для пошуку.</p>
+      <ol id="results" aria-labelledby="result-heading"></ol>
+    </section>
+    <aside>
+      <h2>Індекс</h2>
+      <dl><dt>Документів</dt><dd id="documents">—</dd><dt>Час побудови</dt><dd id="build-time">—</dd>
+        <dt>Використано потоків</dt><dd id="workers">—</dd></dl>
+      <form id="build-form"><label for="threads">Потоки для побудови</label>
+        <input id="threads" type="number" min="1" max="64" value="4" required>
+        <button class="secondary" id="build">Побудувати індекс</button></form>
+      <p id="build-status" role="status"></p>
+    </aside>
+  </main>
+</body>
+</html>
