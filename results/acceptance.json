@@ -1,0 +1,172 @@
+{
+  "health": {
+    "ollama": true,
+    "status": "ok"
+  },
+  "build": {
+    "status": "ok",
+    "documents_indexed": 8,
+    "time_ms": 15
+  },
+  "search_cases": [
+    {
+      "query": "ORBIT?!",
+      "expected": [
+        "space.txt",
+        "flight.txt"
+      ],
+      "actual": [
+        "space.txt",
+        "flight.txt"
+      ],
+      "response": {
+        "results": [
+          {
+            "doc_id": "space.txt",
+            "score": 1.6448441755903582,
+            "snippet": "The telescope tracks a comet in orbit around the sun. Every orbit gives astronomers another chance to measure the comet's icy tail."
+          },
+          {
+            "doc_id": "flight.txt",
+            "score": 1.3213843879503404,
+            "snippet": "A satellite enters orbit above Earth. Engineers tune the antenna and check the signal before the flight."
+          }
+        ],
+        "time_ms": 1
+      }
+    },
+    {
+      "query": "search index",
+      "expected": [
+        "database.txt",
+        "threads.txt"
+      ],
+      "actual": [
+        "database.txt",
+        "threads.txt"
+      ],
+      "response": {
+        "results": [
+          {
+            "doc_id": "database.txt",
+            "score": 3.063169943527019,
+            "snippet": "A database index maps a search term to a document. The index stores word frequency for fast retrieval."
+          },
+          {
+            "doc_id": "threads.txt",
+            "score": 2.583436268303285,
+            "snippet": "Threads share memory in one process. A mutex protects the queue while parallel workers build a search index."
+          }
+        ],
+        "time_ms": 0
+      }
+    },
+    {
+      "query": "current",
+      "expected": [
+        "ocean.txt"
+      ],
+      "actual": [
+        "ocean.txt"
+      ],
+      "response": {
+        "results": [
+          {
+            "doc_id": "ocean.txt",
+            "score": 2.516634147006962,
+            "snippet": "The ocean current carries salt and nutrients. A research vessel follows the current to measure water temperature."
+          }
+        ],
+        "time_ms": 0
+      }
+    },
+    {
+      "query": "violin",
+      "expected": [
+        "music.txt"
+      ],
+      "actual": [
+        "music.txt"
+      ],
+      "response": {
+        "results": [
+          {
+            "doc_id": "music.txt",
+            "score": 1.8068444413730997,
+            "snippet": "A violin and a cello play a quiet melody. The orchestra rehearses its final movement before the concert."
+          }
+        ],
+        "time_ms": 0
+      }
+    },
+    {
+      "query": "xyzzyplugh",
+      "expected": [],
+      "actual": [],
+      "response": {
+        "results": [],
+        "time_ms": 0
+      }
+    }
+  ],
+  "websocket": [
+    [
+      {
+        "data": {
+          "expanded_terms": [
+            "automobile",
+            "vehicle",
+            "motor"
+          ],
+          "original": "car"
+        },
+        "stage": "query_expansion"
+      },
+      {
+        "data": {
+          "results": [],
+          "time_ms": 0
+        },
+        "stage": "keyword_search"
+      },
+      {
+        "stage": "done"
+      }
+    ],
+    [
+      {
+        "data": {
+          "expanded_terms": [
+            "planet",
+            "satellite"
+          ],
+          "original": "orbit"
+        },
+        "stage": "query_expansion"
+      },
+      {
+        "data": {
+          "results": [
+            {
+              "doc_id": "flight.txt",
+              "score": 3.1697257351540182,
+              "snippet": "A satellite enters orbit above Earth. Engineers tune the antenna and check the signal before the flight."
+            },
+            {
+              "doc_id": "space.txt",
+              "score": 1.6448441755903582,
+              "snippet": "The telescope tracks a comet in orbit around the sun. Every orbit gives astronomers another chance to measure the comet's icy tail."
+            }
+          ],
+          "time_ms": 0
+        },
+        "stage": "keyword_search"
+      },
+      {
+        "stage": "done"
+      }
+    ]
+  ],
+  "simultaneous_operations": 72,
+  "cli_text": "space.txt  1.645\n  The telescope tracks a comet in orbit around the sun. Every orbit gives astronomers another chance to measure the comet's icy tail.\nflight.txt  1.321\n  A satellite enters orbit above Earth. Engineers tune the antenna and check the signal before the flight.\nЗбігів: 2 · 0 мс\n"
+}
