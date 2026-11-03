@@ -32,21 +32,30 @@ def paragraphs(nouns, site):
     return sections
 
 
-def document(index, size, seed, samples):
+def write_document(path, index, size, seed, samples):
     rng = random.Random(seed + index)
     topic = index % len(TOPICS)
-    output = bytearray(f"Field report {index:06d} on {TOPICS[topic][0]}.\n".encode())
-    while True:
-        # Occasional cross-topic references produce documents with overlapping vocabularies.
-        pool = samples[topic if rng.randrange(12) else rng.randrange(len(TOPICS))]
-        paragraph = rng.choice(pool)
-        if len(output) + len(paragraph) > size:
-            break
-        output.extend(paragraph)
-    output.extend(b" " * (size - len(output) - 1))
-    if len(output) < size:
-        output.append(10)
-    return output
+    pending = bytearray(f"Field report {index:06d} on {TOPICS[topic][0]}.\n".encode())
+    remaining = size - len(pending)
+    digest = hashlib.sha256()
+    with path.open("wb") as stream:
+        while True:
+            # A few references cross topic boundaries.
+            pool = samples[topic if rng.randrange(12) else rng.randrange(len(TOPICS))]
+            paragraph = rng.choice(pool)
+            if len(paragraph) > remaining:
+                if remaining:
+                    pending.extend(b" " * (remaining - 1) + b"\n")
+                break
+            pending.extend(paragraph)
+            remaining -= len(paragraph)
+            if len(pending) >= 64 * 1024:
+                stream.write(pending)
+                digest.update(pending)
+                pending.clear()
+        stream.write(pending)
+        digest.update(pending)
+    return digest.digest()
 
 
 def generate(destination, count, total, seed):
@@ -64,9 +73,9 @@ def generate(destination, count, total, seed):
     try:
         for i in range(count):
             name = f"field-{i:06d}.txt"
-            data = document(i, total // count + (i < total % count), seed, samples)
-            (staging / name).write_bytes(data)
-            digest.update(name.encode() + b"\0" + hashlib.sha256(data).digest())
+            size = total // count + (i < total % count)
+            checksum = write_document(staging / name, i, size, seed, samples)
+            digest.update(name.encode() + b"\0" + checksum)
         manifest = dict(documents=count, bytes=total, seed=seed, generator_version=1,
                         corpus_sha256=digest.hexdigest())
         (staging / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
