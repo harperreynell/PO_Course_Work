@@ -6,7 +6,7 @@
   "build": {
     "status": "ok",
     "documents_indexed": 8,
-    "time_ms": 15
+    "time_ms": 23
   },
   "search_cases": [
     {
@@ -32,7 +32,7 @@
             "snippet": "A satellite enters orbit above Earth. Engineers tune the antenna and check the signal before the flight."
           }
         ],
-        "time_ms": 1
+        "time_ms": 0
       }
     },
     {
@@ -113,12 +113,12 @@
     [
       {
         "data": {
+          "original": "car",
           "expanded_terms": [
             "automobile",
             "vehicle",
             "motor"
-          ],
-          "original": "car"
+          ]
         },
         "stage": "query_expansion"
       },
@@ -136,11 +136,11 @@
     [
       {
         "data": {
+          "original": "orbit",
           "expanded_terms": [
             "planet",
             "satellite"
-          ],
-          "original": "orbit"
+          ]
         },
         "stage": "query_expansion"
       },

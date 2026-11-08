@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 final class OllamaClient {
@@ -31,7 +32,7 @@ final class OllamaClient {
              "required":["terms"]}
             """);
     private final HttpClient http = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(1)).build();
-    private final Semaphore available = new Semaphore(2);
+    private final Semaphore available = new Semaphore(1, true);
     private final URI base;
     private final String model;
     private final Duration timeout;
@@ -63,15 +64,21 @@ final class OllamaClient {
     }
 
     List<String> expand(String query) {
-        if (!available.tryAcquire()) {
-            return List.of();
-        }
+        long start = System.nanoTime();
+        long budget = timeout.toNanos();
+        boolean acquired = false;
         try {
+            acquired = available.tryAcquire(budget, TimeUnit.NANOSECONDS);
+            long remaining = budget - (System.nanoTime() - start);
+            if (!acquired || remaining <= 0) {
+                System.err.println("Query expansion unavailable: model queue timeout");
+                return List.of();
+            }
             var payload = Map.of("model", model, "system", SYSTEM,
                     "prompt", Wire.JSON.toJson(Map.of("query", query)), "format", FORMAT,
                     "stream", false, "options", Map.of("temperature", 0, "seed", 42, "num_predict", 96));
             HttpRequest request = HttpRequest.newBuilder(base.resolve("/api/generate"))
-                    .timeout(timeout).header("Content-Type", "application/json")
+                    .timeout(Duration.ofNanos(remaining)).header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(Wire.JSON.toJson(payload))).build();
             String generated = Wire.string(send(request), "response");
             JsonElement terms = Wire.object(generated).get("terms");
@@ -97,7 +104,9 @@ final class OllamaClient {
         } catch (IOException | RuntimeException error) {
             System.err.println("Query expansion unavailable: " + error.getMessage());
         } finally {
-            available.release();
+            if (acquired) {
+                available.release();
+            }
         }
         return List.of();
     }

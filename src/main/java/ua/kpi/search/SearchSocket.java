@@ -29,7 +29,7 @@ final class SearchSocket extends AbstractReceiveListener {
     @Override protected void onFullTextMessage(WebSocketChannel channel, BufferedTextMessage message) {
         String raw = message.getData();
         channel.suspendReceives();
-        channel.getWorker().execute(() -> {
+        Thread.startVirtualThread(() -> {
             try {
                 String query = Wire.query(Wire.object(raw));
                 List<String> additions = ollama.expand(query);
