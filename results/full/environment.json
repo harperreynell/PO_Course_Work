@@ -1,0 +1,49 @@
+{
+  "started_utc": "2026-11-19T22:27:20.391063+00:00",
+  "os": "macOS-27.2.1-arm64-arm-64bit",
+  "cpu": "Apple M5",
+  "host_logical_cpus": 10,
+  "architecture": "arm64",
+  "python": "3.12.16",
+  "docker_engine": "29.9.3",
+  "docker_cpus": 10,
+  "docker_memory_bytes": 8319438848,
+  "compose": "5.7.0",
+  "java": "Picked up JAVA_TOOL_OPTIONS: -Xms64m -Xmx1024m\nopenjdk version \"21.0.13\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-21.0.13+9 (build 21.0.13+9-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.13+9 (build 21.0.13+9-LTS, mixed mode, sharing)",
+  "server_image": "sha256:18c40154f009190d8646a63792ace247093846e59cf8d622b572bee2f2537cc7",
+  "jar": "9ba4ee35ddd038d905fc14cba96c6ded4f5afb8ba135d80417fbbd57ef8b2774  /app/search.jar",
+  "git_commit": "61ce3b90f7d9eca4a1ab10036aa64d9596419a09",
+  "corpus": {
+    "documents": 10000,
+    "bytes": 2147483648,
+    "corpus_sha256": "1984572bf81d67b795dabeccffa3f8218723b8d37000650bdfd809a97f602a60",
+    "seed": 2026,
+    "generator_version": 1
+  },
+  "queries": [
+    "satellite orbit",
+    "electric train",
+    "ocean water",
+    "violin",
+    "search index",
+    "garden soil",
+    "battery",
+    "radar antenna"
+  ],
+  "max_threads": 6,
+  "clients": [
+    1,
+    2,
+    4,
+    8,
+    16
+  ],
+  "repeats": 3,
+  "seed": 2026,
+  "seconds": 3,
+  "client_host": "127.0.0.1",
+  "port": 18081,
+  "protocol": "HTTP/1.1 keep-alive",
+  "cache": "one unmeasured build; OS file cache is not cleared",
+  "finished_utc": "2026-11-19T22:30:24.664924+00:00"
+}

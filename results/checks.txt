@@ -1,0 +1,16 @@
+Перевірка Java, Maven Surefire
+
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.840 s -- in ua.kpi.search.OllamaTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.048 s -- in ua.kpi.search.IndexTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in ua.kpi.search.TaskPoolTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0
+BUILD SUCCESS
+
+Наскрізний тест з новим томом моделей, scripts/test-compose.sh
+
+PASS · REST, ranking, rebuilds, concurrent clients, validation, CLI and WebSocket
+Ollama expansion: ['automobile', 'vehicle', 'motor']
+PASS · Chromium desktop and mobile widths, index form, results and three WS stages
+
+SHA-256 фактичних відповідей у results/acceptance.json
+a95ead2ed50509836a521e8fc00ced0014d38509265f272bb5742bce12cd1c41

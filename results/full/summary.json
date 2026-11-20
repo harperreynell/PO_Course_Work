@@ -1,0 +1,72 @@
+{
+  "index": [
+    {
+      "parallelism": 1,
+      "median": 9.457,
+      "min": 9.143,
+      "max": 9.866
+    },
+    {
+      "parallelism": 2,
+      "median": 8.721,
+      "min": 8.53,
+      "max": 8.999
+    },
+    {
+      "parallelism": 3,
+      "median": 7.7540000000000004,
+      "min": 7.222,
+      "max": 7.861
+    },
+    {
+      "parallelism": 4,
+      "median": 5.976,
+      "min": 5.853,
+      "max": 5.985
+    },
+    {
+      "parallelism": 5,
+      "median": 5.152,
+      "min": 5.018,
+      "max": 5.546
+    },
+    {
+      "parallelism": 6,
+      "median": 4.705,
+      "min": 4.602,
+      "max": 5.335
+    }
+  ],
+  "search": [
+    {
+      "parallelism": 1,
+      "median": 2236.9264,
+      "min": 2012.5451,
+      "max": 2365.1243
+    },
+    {
+      "parallelism": 2,
+      "median": 4922.9891,
+      "min": 3956.2084,
+      "max": 4964.4674
+    },
+    {
+      "parallelism": 4,
+      "median": 6782.6479,
+      "min": 5732.2378,
+      "max": 6871.0722
+    },
+    {
+      "parallelism": 8,
+      "median": 9065.4824,
+      "min": 7887.4993,
+      "max": 10258.6755
+    },
+    {
+      "parallelism": 16,
+      "median": 11491.9318,
+      "min": 10557.8188,
+      "max": 11758.8893
+    }
+  ]
+}
