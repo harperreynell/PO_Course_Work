@@ -7,3 +7,27 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# Coursework documents and presentation assets are submitted separately.
+*.pdf
+*.doc
+*.docx
+*.odt
+*.ppt
+*.pptx
+*.odp
+/docs/*
+!/docs/contract.md
+/reports/
+/prompts/
+prompt.txt
+prompts.txt
+prompt.md
+prompts.md
+defense*.md
+/results/screenshots/
+/results/full/*.png
+/scripts/*report*.py
+/scripts/report-renderer/
+/scripts/render-uml.sh
+/scripts/word_export.py
